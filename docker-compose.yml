@@ -1,0 +1,43 @@
+# Portainer-stack: secondbrain
+# Samme mønster som madplan/intervals/unifi: én service + egen cloudflared.
+services:
+  secondbrain:
+    build: ./server            # eller image: ghcr.io/anders-vestergaard/secondbrain-mcp:latest
+    container_name: secondbrain-mcp
+    restart: unless-stopped
+    environment:
+      VAULT_REPO: git@github.com:Anders-Vestergaard/secondbrain.git
+      BASE_URL: https://brain.hestvest.dk
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY}      # openssl rand -hex 32
+      FASTMCP_HOME: /data/fastmcp             # OAuth-registreringer
+      ALLOWED_GITHUB_USERS: Anders-Vestergaard
+      PULL_INTERVAL_SECONDS: "60"
+      GIT_AUTHOR: "Claude (secondbrain) <secondbrain@hestvest.dk>"
+    volumes:
+      - secondbrain-vault:/vault
+      - secondbrain-auth:/data/fastmcp
+    secrets:
+      - deploy_key
+    networks: [secondbrain]
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: secondbrain-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CF_TUNNEL_TOKEN}
+    depends_on: [secondbrain]
+    networks: [secondbrain]
+    # Public hostname i Cloudflare: brain.hestvest.dk -> http://secondbrain-mcp:8000
+
+volumes:
+  secondbrain-vault:
+  secondbrain-auth:
+
+secrets:
+  deploy_key:
+    file: /data/secrets/secondbrain_deploy_key   # tilpas sti på Pi'en
+
+networks:
+  secondbrain:

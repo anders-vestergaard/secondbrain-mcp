@@ -18,7 +18,8 @@ Git LFS på GitHub: 1 GB gratis lager/båndbredde, derefter datapakker.
 ssh-keygen -t ed25519 -f secondbrain_deploy_key -N ""
 ```
 Public key under repoets *Settings → Deploy keys* med **Allow write access**.
-Private key på Pi'en i den sti, compose-filen peger på.
+Den private nøgle gives som env `DEPLOY_KEY_B64` i Portainer:
+`base64 -i ~/.ssh/secondbrain_deploy_key | pbcopy`
 
 ## 3. GitHub OAuth App (login til connectoren)
 *Settings → Developer settings → OAuth Apps → New*

@@ -54,8 +54,14 @@ ALLOWED_GITHUB_USERS = {
 mcp = FastMCP(
     "secondbrain",
     instructions=(
-        "Anders' second brain. Læs CLAUDE.md i roden før du placerer filer eller "
-        "skriver beslutninger. Tegninger ses med view_pdf_page."
+        "Anders' second brain: hans dokumenter (huset, el, VVS, have, kontrakter m.m.) "
+        "og beslutningslogs i Markdown. Læs CLAUDE.md i roden før du placerer filer "
+        "eller skriver beslutninger.\n"
+        "- Søg her (search/list_tree), når chatten handler om noget, der kan ligge her, "
+        "før du svarer.\n"
+        "- Spørg Anders proaktivt, når chatten giver noget, der bør gemmes: en beslutning, "
+        "et dokument eller et emne værd at huske – også uden for huset. Gem først efter ja.\n"
+        "- Tegninger ses visuelt med view_pdf_page, ikke som tekst."
     ),
     auth=_build_auth(),
 )

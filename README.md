@@ -8,10 +8,10 @@ To repoer:
 ```bash
 git init secondbrain && cd secondbrain
 cp -r ../secondbrain-skitse/vault/. .
-git lfs install && git add -A && git commit -m "init vault"
+git add -A && git commit -m "init vault"
 git remote add origin git@github.com:Anders-Vestergaard/secondbrain.git && git push -u origin main
 ```
-Git LFS på GitHub: 1 GB gratis lager/båndbredde, derefter datapakker.
+PDF'er ligger som almindelige git-filer (ikke LFS – sessioner kan ikke nå LFS-lageret). Grænse: 100 MB pr. fil.
 
 ## 2. Deploy key (Pi → GitHub)
 ```bash
